@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "904504284800",
+    "project_id": "focus-session-b514f",
+    "storage_bucket": "focus-session-b514f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904504284800:android:c3efabfd0c0603ca8b3865",
+        "android_client_info": {
+          "package_name": "com.example.focussession"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "904504284800-a7ce1dibuqmrnhhe76fr5dpcqk5ic6r7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.focussession",
+            "certificate_hash": "cbbc0a1376909abd4a5e8748ffa8d28feaedc644"
+          }
+        },
+        {
+          "client_id": "904504284800-4krt26ns9truv47mqmjdie53ctlj0bsl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsE9OuRAnZ8EumOlPWWVPIjyuxkH93K44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "904504284800-4krt26ns9truv47mqmjdie53ctlj0bsl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
