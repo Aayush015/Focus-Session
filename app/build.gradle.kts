@@ -57,5 +57,7 @@ dependencies {
     implementation("com.google.android.material:material:1.13.0-alpha04")
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation("io.github.inflationx:calligraphy3:3.1.1")
+    implementation("io.github.inflationx:viewpump:2.0.3")
 
 }

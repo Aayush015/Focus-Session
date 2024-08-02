@@ -1,5 +1,6 @@
 package com.example.focussession;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -39,6 +41,12 @@ public class HomeActivity extends AppCompatActivity {
     String TAG = "Homepage query docs";
     TextView userName;
     CircleImageView userProfilePicture;
+
+    @Override
+    protected void attachBaseContext(Context newBase){
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +56,14 @@ public class HomeActivity extends AppCompatActivity {
         taskRv = findViewById(R.id.taskListID);
         userName = findViewById(R.id.userName);
         userProfilePicture = findViewById(R.id.userProfilePicture);
+
+        userProfilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         userName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         Picasso.get().load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(userProfilePicture);
