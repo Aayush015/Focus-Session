@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -42,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
     String TAG = "Homepage query docs";
     TextView userName;
     CircleImageView userProfilePicture;
+    SearchView searchView;
 
     @Override
     protected void attachBaseContext(Context newBase){
@@ -79,6 +81,22 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, AddTaskActivity.class));
+            }
+        });
+
+        // Highlight text when searched
+        searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                taskListAdapter.setSearchQuery(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                taskListAdapter.setSearchQuery(newText);
+                return false;
             }
         });
 

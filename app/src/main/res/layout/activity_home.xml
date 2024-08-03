@@ -63,6 +63,7 @@
         android:queryHint="Search"
         android:iconifiedByDefault="false"
         android:layout_margin="5dp"
+        android:id="@+id/searchView"
         />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -81,6 +82,16 @@
         android:layout_marginBottom="30dp"
         android:layout_marginRight="30dp"
         android:id="@+id/addTaskFAB"
+        />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@draw"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/openTimerFAB"
         />
 </RelativeLayout>

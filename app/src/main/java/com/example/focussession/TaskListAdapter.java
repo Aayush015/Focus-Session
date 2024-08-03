@@ -1,6 +1,9 @@
 package com.example.focussession;
 
 import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.focussession.model.TaskModel;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.api.Backend;
+import com.google.firebase.annotations.concurrent.Background;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -22,6 +27,7 @@ import java.util.ArrayList;
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> {
 
     private ArrayList<TaskModel> taskDataSet;
+    private String searchQuery = "";
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tasksList, taskStatusTv;
@@ -52,8 +58,22 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         TaskModel task = taskDataSet.get(position);
         viewHolder.tasksList.setText(task.getTaskName());
         viewHolder.taskStatusTv.setText(task.getTaskStatus());
-
         String status = task.getTaskStatus().toLowerCase();
+        String taskName = task.getTaskName();
+
+        // Highlight search query in the task name
+        if (!searchQuery.isEmpty()){
+            Spannable spannable = new SpannableString(taskName);
+            int index = taskName.toLowerCase().indexOf(searchQuery.toLowerCase());
+            // Search match is found in the list
+            if (index != -1){
+                spannable.setSpan(new BackgroundColorSpan(Color.parseColor("#BDBDBD")), index, index + searchQuery.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            viewHolder.tasksList.setText(spannable);
+        } else {
+            viewHolder.tasksList.setText(taskName);
+        }
+        viewHolder.taskStatusTv.setText(status);
 
         switch (status) {
             case "pending":
@@ -109,5 +129,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     @Override
     public int getItemCount() {
         return taskDataSet.size();
+    }
+
+    /**
+     * Highlight text when user searches for a specific task.
+     * @param query
+     */
+    public void setSearchQuery(String query) {
+        this.searchQuery = query;
+        notifyDataSetChanged();
     }
 }
