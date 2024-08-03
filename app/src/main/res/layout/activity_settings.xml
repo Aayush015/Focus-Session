@@ -11,9 +11,10 @@
     <!-- Make the back button -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
+        android:layout_width="133dp"
         android:layout_height="50dp"
         android:background="?attr/colorPrimary"
+        app:title="Home"
         app:navigationIcon="@drawable/baseline_arrow_back_24"
         app:titleTextColor="@android:color/white" />
 
