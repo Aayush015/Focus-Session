@@ -2,6 +2,10 @@
 
 Focus Session is a productivity application that helps users manage their time using the Pomodoro Technique. It features a 25-minute focus session followed by a 5-minute break, with a seamless transition between sessions and breaks. The app also includes Google Sign-In for user authentication and a history of completed sessions.
 
+## Video Demo
+
+[Watch the video demo here](https://youtu.be/eu8IlJ4EfSI)
+
 ## Features
 
 - **Pomodoro Timer**: Automatically switches between 25-minute focus sessions and 5-minute breaks.
@@ -54,7 +58,7 @@ Focus Session is a productivity application that helps users manage their time u
 
 <img src="app/src/main/assets/appPictures/home.png" alt="Home Screen" width="200" />
 
-### Other Screenshots (Sign_in page, Study session timer, break timer, settings menu)
+### Other Screenshots (sign in page, study session timer, break timer, & settings menu)
 
 <table>
     <tr>
