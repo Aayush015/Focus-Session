@@ -50,11 +50,11 @@ Focus Session is a productivity application that helps users manage their time u
 
 ## Screenshots
 
-![Sign In](assets/appPictures/sign_in.png)
-![Home](assets/appPictures/home.png)
-![Focus Session](assets/appPictures/focus_session.png)
-![Break](assets/appPictures/break.png)
-![Settings](assets/appPictures/settings.png)
+![Sign In](app/src/main/assets/appPictures/sign_in.png)
+![Home](app/src/main/assets/appPictures/home.png)
+![Focus Session](app/src/main/assets/appPictures/focus_session.png)
+![Break](app/src/main/assets/appPictures/break.png)
+![Settings](app/src/main/assets/appPictures/settings.png)
 
 ## Project Structure
 
