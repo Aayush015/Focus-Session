@@ -2,30 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/timerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/background"
     tools:context=".TimerActivity">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieAnimationView"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:lottie_rawRes="@raw/timer_animation" />
+        android:background="?attr/colorPrimary"
+        app:title="Home"
+        app:navigationIcon="@drawable/baseline_arrow_back_24"
+        app:titleTextColor="@android:color/white" />
 
     <TextView
         android:id="@+id/timerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/lottieAnimationView"
-        android:text="25:00"
-        android:textSize="50sp"
+        android:layout_marginTop="100dp"
+        android:textSize="48sp"
         android:textColor="@android:color/black" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/timerAnimation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:lottie_rawRes="@raw/timer_animation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
 
     <Button
         android:id="@+id/breakButton"
@@ -33,7 +39,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="5 Min Break"
-        android:visibility="gone" />
-
+        android:layout_marginBottom="30dp"
+        android:text="Take a break" />
 </RelativeLayout>
