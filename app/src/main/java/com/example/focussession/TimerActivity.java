@@ -12,6 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
@@ -26,6 +28,10 @@ public class TimerActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
     private boolean isBreakTime = false;
+    private int completedSessions = 0;
+    private int completedBreaks = 0;
+    private long sessionStartTime;
+    private long breakStartTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class TimerActivity extends AppCompatActivity {
                 if (countDownTimer != null) {
                     countDownTimer.cancel();
                 }
+                saveSessionData();
                 Intent intent = new Intent(TimerActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -64,11 +71,20 @@ public class TimerActivity extends AppCompatActivity {
         });
     }
 
+    private void saveSessionData() {
+        String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
+        int focusedMinutes = completedSessions * 25;
+        int totalBreaks = completedBreaks * 5;
+        SettingsActivity.TimerSession session = new SettingsActivity.TimerSession(dateTime, focusedMinutes, totalBreaks);
+        SettingsActivity.timerSessions.add(session);
+    }
+
     private void startSession() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
         isBreakTime = false;
+        sessionStartTime = System.currentTimeMillis();
         breakButton.setText("Take a break");
         timeLeftInMillis = START_TIME_IN_MILLIS_SESSION;
         timerAnimation.setAnimation(R.raw.session_animation);
@@ -81,6 +97,8 @@ public class TimerActivity extends AppCompatActivity {
             countDownTimer.cancel();
         }
         isBreakTime = true;
+        breakStartTime = System.currentTimeMillis();
+        completedSessions += (System.currentTimeMillis() - sessionStartTime) / (1000 * 60); // Calculate minutes spent in session
         breakButton.setText("Start another session");
         timeLeftInMillis = START_TIME_IN_MILLIS_BREAK;
         timerAnimation.setAnimation(R.raw.break_animation);
@@ -99,6 +117,7 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 if (isBreakTime) {
+                    completedBreaks += (System.currentTimeMillis() - breakStartTime) / (1000 * 60); // Calculate minutes spent in break
                     startSession();
                 } else {
                     startBreak();
