@@ -19,10 +19,6 @@ import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    /**
-     * Timer Session History
-     * Shows the total sessions user has taken including the total breaks.
-     */
     public static class TimerSession {
         private final String dateTime;
         private final int focusedMinutes;
