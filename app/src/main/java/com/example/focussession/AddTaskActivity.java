@@ -30,6 +30,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
+/**
+ * Activated by + icon on the bottom right. It opens up another window where users can add task.
+ * These added task will show up on the home screen.
+ */
 public class AddTaskActivity extends AppCompatActivity {
 
     EditText etTaskInput;
@@ -73,7 +77,6 @@ public class AddTaskActivity extends AppCompatActivity {
                                 public void onSuccess(DocumentReference documentReference) {
                                     Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                                     findViewById(R.id.successLayout).setVisibility(View.VISIBLE);
-                                    findViewById(R.id.addTaskLayout).setVisibility(View.GONE);
                                     findViewById(R.id.progressBar).setVisibility(View.GONE);
 
                                 }

@@ -16,6 +16,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Class to handle timer activity.
+ * Activated by the timer logo on the bottom left. When clicked, a 25 minute timer will start
+ * following pomodoro technique. There is a button which user can press to take a 5 minute break.
+ */
 public class TimerActivity extends AppCompatActivity {
 
     private static final long START_TIME_IN_MILLIS_SESSION = 1500000; // 25 minutes
@@ -28,10 +33,10 @@ public class TimerActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
     private boolean isBreakTime = false;
-    private int completedSessions = 0;
-    private int completedBreaks = 0;
     private long sessionStartTime;
     private long breakStartTime;
+    private long elapsedSessionTime = 0;
+    private long elapsedBreakTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +78,9 @@ public class TimerActivity extends AppCompatActivity {
 
     private void saveSessionData() {
         String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
-        int focusedMinutes = completedSessions * 25;
-        int totalBreaks = completedBreaks * 5;
+        int focusedMinutes = (int) (elapsedSessionTime / (1000 * 60));
+        int totalBreaks = (elapsedBreakTime > 0) ? (int) (elapsedBreakTime / (1000 * 60)) : 0;
+
         SettingsActivity.TimerSession session = new SettingsActivity.TimerSession(dateTime, focusedMinutes, totalBreaks);
         SettingsActivity.timerSessions.add(session);
     }
@@ -85,6 +91,7 @@ public class TimerActivity extends AppCompatActivity {
         }
         isBreakTime = false;
         sessionStartTime = System.currentTimeMillis();
+        elapsedSessionTime = 0;
         breakButton.setText("Take a break");
         timeLeftInMillis = START_TIME_IN_MILLIS_SESSION;
         timerAnimation.setAnimation(R.raw.session_animation);
@@ -98,7 +105,7 @@ public class TimerActivity extends AppCompatActivity {
         }
         isBreakTime = true;
         breakStartTime = System.currentTimeMillis();
-        completedSessions += (System.currentTimeMillis() - sessionStartTime) / (1000 * 60); // Calculate minutes spent in session
+        elapsedBreakTime = 0;
         breakButton.setText("Start another session");
         timeLeftInMillis = START_TIME_IN_MILLIS_BREAK;
         timerAnimation.setAnimation(R.raw.break_animation);
@@ -112,12 +119,17 @@ public class TimerActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 timeLeftInMillis = millisUntilFinished;
                 updateCountDownText();
+                if (isBreakTime) {
+                    elapsedBreakTime += 1000; // Increment elapsed break time
+                } else {
+                    elapsedSessionTime += 1000; // Increment elapsed session time
+                }
             }
 
             @Override
             public void onFinish() {
                 if (isBreakTime) {
-                    completedBreaks += (System.currentTimeMillis() - breakStartTime) / (1000 * 60); // Calculate minutes spent in break
+                    saveSessionData(); // Save session data before switching to the next session
                     startSession();
                 } else {
                     startBreak();

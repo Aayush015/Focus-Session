@@ -26,7 +26,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-
+/**
+ * MainActivity is what shows up on the screen when the user opens the app.
+ * Handles Google sign-in
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "GoogleActivity";

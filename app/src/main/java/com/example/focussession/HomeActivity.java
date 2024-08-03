@@ -35,6 +35,11 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
+/**
+ * Contains all the activity after the user logs in. This is the welcome screen that shows
+ * all the current pending and completed tasks, user's profile at the top left. It also contains
+ * icons on the bottom which can be used to add tasks, or start study session.
+ */
 public class HomeActivity extends AppCompatActivity {
 
     RecyclerView taskRv;

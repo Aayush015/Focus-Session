@@ -24,6 +24,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * This class manages tasks from Firebase. Retrieves tasks, manages them(mark complete, deleted),
+ * , and add tasks to the database.
+ */
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> {
 
     private ArrayList<TaskModel> taskDataSet;

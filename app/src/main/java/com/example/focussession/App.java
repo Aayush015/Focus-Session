@@ -6,6 +6,10 @@ import io.github.inflationx.calligraphy3.CalligraphyConfig;
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
 import io.github.inflationx.viewpump.ViewPump;
 
+/**
+ * Class to import custom font from google. This font is used to display the user's name
+ * at the top of the screen.
+ */
 public class App extends Application {
     @Override
     public void onCreate() {
