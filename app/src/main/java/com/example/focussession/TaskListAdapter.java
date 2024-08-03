@@ -1,7 +1,6 @@
 package com.example.focussession;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,119 +10,102 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.focussession.model.TaskModel;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> {
 
     private ArrayList<TaskModel> taskDataSet;
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tasksList, taskStatusTv;
         LinearLayout containerLL;
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for the ViewHolder's View
-
-            tasksList = (TextView) view.findViewById(R.id.tasksList);
-            taskStatusTv = (TextView) view.findViewById(R.id.taskStatusTv);
-            containerLL=(LinearLayout) view.findViewById(R.id.containerLL);
+            tasksList = view.findViewById(R.id.tasksList);
+            taskStatusTv = view.findViewById(R.id.taskStatusTv);
+            containerLL = view.findViewById(R.id.containerLL);
         }
-
     }
 
-    public TaskListAdapter(ArrayList<TaskModel> taskdataSet) {
-        this.taskDataSet = taskdataSet;
+    public TaskListAdapter(ArrayList<TaskModel> taskDataSet) {
+        this.taskDataSet = taskDataSet;
     }
 
-    // Create new views (invoked by the layout manager)
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_task, viewGroup, false);
-
         return new ViewHolder(view);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        TaskModel task = taskDataSet.get(position);
+        viewHolder.tasksList.setText(task.getTaskName());
+        viewHolder.taskStatusTv.setText(task.getTaskStatus());
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        viewHolder.tasksList.setText(taskDataSet.get(position).getTaskName());
-        viewHolder.taskStatusTv.setText(taskDataSet.get(position).getTaskStatus());
+        String status = task.getTaskStatus().toLowerCase();
 
-        String status = taskDataSet.get(position).getTaskStatus();
-
-        if (status.toLowerCase().equals("pending")){
-            viewHolder.taskStatusTv.setBackgroundColor(Color.parseColor("#FFFF00"));
+        switch (status) {
+            case "pending":
+                viewHolder.taskStatusTv.setBackgroundColor(Color.parseColor("#FFFF00")); // yellow
+                break;
+            case "completed":
+                viewHolder.taskStatusTv.setBackgroundColor(Color.parseColor("#00FF00")); // green
+                break;
+            default:
+                viewHolder.taskStatusTv.setBackgroundColor(Color.parseColor("#FFFFFF")); // white
+                break;
         }
-        else if (status.toLowerCase().equals("completed")){
-            viewHolder.taskStatusTv.setBackgroundColor(Color.parseColor("00FF00"));
-        }
-        else {
-            viewHolder.taskStatusTv.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        }
 
-        viewHolder.containerLL.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(v.getContext(), viewHolder.containerLL);
-                popupMenu.inflate(R.menu.taskmenu);
-                popupMenu.show();
+        viewHolder.containerLL.setOnLongClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(v.getContext(), viewHolder.containerLL);
+            popupMenu.inflate(R.menu.taskmenu);
+            popupMenu.show();
 
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.deleteMenu){
-                            FirebaseFirestore.getInstance().collection("tasks").document(taskDataSet.get(position).getTaskId()).delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Toast.makeText(v.getContext(), "Task Deleted Successfully", Toast.LENGTH_SHORT).show();
-                                            viewHolder.containerLL.setVisibility(View.GONE);
-                                        }
-                                    });
-                        }
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.deleteMenu) {
+                    FirebaseFirestore.getInstance().collection("tasks")
+                            .document(taskDataSet.get(position).getTaskId())
+                            .delete()
+                            .addOnSuccessListener(unused -> {
+                                Toast.makeText(v.getContext(), "Task Deleted Successfully", Toast.LENGTH_SHORT).show();
+                                viewHolder.containerLL.setVisibility(View.GONE);
+                            });
+                    return true;
+                }
 
-                        if (item.getItemId() == R.id.markCompleteMenu){
+                if (item.getItemId() == R.id.markCompleteMenu) {
+                    TaskModel completedTask = taskDataSet.get(position);
+                    completedTask.setTaskStatus("completed");
+                    FirebaseFirestore.getInstance().collection("tasks")
+                            .document(taskDataSet.get(position).getTaskId())
+                            .set(completedTask)
+                            .addOnSuccessListener(unused -> {
+                                Toast.makeText(v.getContext(), "Task Marked as Completed!", Toast.LENGTH_SHORT).show();
+                            });
 
-                            TaskModel completedTask = taskDataSet.get(position);
-                            completedTask.setTaskStatus("completed");
-                            FirebaseFirestore.getInstance().collection("tasks").document(taskDataSet.get(position).getTaskId())
-                                    .set(completedTask).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Toast.makeText(v.getContext(), "Task Marked as Completed!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                    viewHolder.taskStatusTv.setBackgroundColor(Color.parseColor("#00FF00"));
+                    viewHolder.taskStatusTv.setText("COMPLETED");
+                    return true;
+                }
 
-                            viewHolder.taskStatusTv.setBackgroundColor(Color.parseColor("#00FF00"));
-                            viewHolder.taskStatusTv.setText("COMPLETED");
-                        }
-                        return false;
-                    }
-                });
                 return false;
-            }
+            });
+
+            return false;
         });
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return taskDataSet.size();
