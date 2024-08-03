@@ -50,11 +50,22 @@ Focus Session is a productivity application that helps users manage their time u
 
 ## Screenshots
 
-![Sign In](app/src/main/assets/appPictures/sign_in.png)
-![Home](app/src/main/assets/appPictures/home.png)
-![Focus Session](app/src/main/assets/appPictures/focus_session.png)
-![Break](app/src/main/assets/appPictures/break.png)
-![Settings](app/src/main/assets/appPictures/settings.png)
+### Home Screen
+
+<img src="app/src/main/assets/appPictures/home.png" alt="Home Screen" width="200" />
+
+### Other Screenshots (Sign_in page, Study session timer, break timer, settings menu)
+
+<table>
+    <tr>
+        <td><img src="app/src/main/assets/appPictures/sign_in.png" alt="Sign In" width="150"/></td>
+        <td><img src="app/src/main/assets/appPictures/focus_session.png" alt="Focus Session" width="150" /></td>
+    </tr>
+    <tr>
+        <td><img src="app/src/main/assets/appPictures/break.png" alt="Break" width="150" /></td>
+        <td><img src="app/src/main/assets/appPictures/settings.png" alt="Settings" width="150" /></td>
+    </tr>
+</table>
 
 ## Project Structure
 
