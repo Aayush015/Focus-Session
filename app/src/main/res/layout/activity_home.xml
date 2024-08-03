@@ -73,6 +73,7 @@
             />
     </LinearLayout>
 
+    <!-- Add Task Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,10 +85,11 @@
         android:id="@+id/addTaskFAB"
         />
 
+    <!-- Open Timer Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@draw"
+        android:src="@drawable/baseline_access_time_24"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="30dp"

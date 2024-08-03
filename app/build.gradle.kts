@@ -59,5 +59,5 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("io.github.inflationx:calligraphy3:3.1.1")
     implementation("io.github.inflationx:viewpump:2.0.3")
-
+    implementation("com.airbnb.android:lottie:6.4.0")
 }

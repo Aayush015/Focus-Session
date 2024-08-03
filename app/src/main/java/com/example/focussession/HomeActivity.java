@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.focussession.model.TaskModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -120,5 +121,15 @@ public class HomeActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        // Open timer task
+        FloatingActionButton timerButton = findViewById(R.id.openTimerFAB);
+        timerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, TimerActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
